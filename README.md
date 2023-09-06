@@ -4,13 +4,13 @@ ECE 3011 Capstone Design Project.
 
 Implementing Microbit software architecture to control educational device for 1st and 2nd grade public school teacher lesson plans.
 
-The source/examples folder contains a selection of samples demonstrating the capabilities and usage of the runtime APIs.
+The source/examples folder contains a selection of subsystems demonstrating the capabilities and usage of the device.
 To select a sample, simply copy the .cpp files from the relevant folder into the source/ folder.
 
-e.g. to select the "invaders" example:
+e.g. to select the "digital" example:
 
 ```
-cp source/examples/invaders/* source
+cp source/examples/digital/* source
 ```
 
 and then to compile your sample:
