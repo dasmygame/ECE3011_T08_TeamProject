@@ -26,6 +26,16 @@
 
 Adafruit_7segment matrix = Adafruit_7segment();
 
+void incrementDigit(int digitNum, int currDigit) {
+  currDigit++;
+  matrix.writeDigitNum(digitNum, currDigit, drawDots);
+}
+
+void decrementDigit(int digitNum, int currDigit) {
+  currDigit--;
+  matrix.writeDigitNum(digitNum, currDigit, drawDots);
+}
+
 void setup() {
 #ifndef __AVR_ATtiny85__
   Serial.begin(9600);
