@@ -1,4 +1,5 @@
-from microbit import * 
+from microbit import *
+
 class backpack:
     ADDRESS             = 0x70
     BLINK_CMD           = 0x80
@@ -76,7 +77,7 @@ while True:
     pin0.write_analog(100)
     sleep(1000)
     f = backpack()
-    f.set_decimal(i)
+    f.set_decimal(2)
     f.update_display()
     sleep(1000)
     f.print(1234)
@@ -86,29 +87,28 @@ while True:
     i = 1234
 
     #3rd digit UP
-    if pins.digital_read_pin(DigitalPin.P3) == 1
+    if pin3.read_digital() == 1:
         i += 10
         f.print(i)
         f.update_display()
         sleep(1000)
     
     #3rd digit DOWN
-    if pins.digital_read_pin(DigitalPin.P4) == 1
+    if pin4.read_digital() == 1:
         i -= 10
         f.print(i)
         f.update_display()
         sleep(1000)
 
     #4th digit UP
-    if pins.digital_read_pin(DigitalPin.P5) == 1
+    if pin5.read_digital() == 1:
         i += 1
         f.print(i)
         f.update_display()
         sleep(1000)
 
-    if pins.digital_read_pin(DigitalPin.P6) == 1
+    if pin6.read_digital() == 1:
         i -= 1
         f.print(i)
         f.update_display()
         sleep(1000)
-        
