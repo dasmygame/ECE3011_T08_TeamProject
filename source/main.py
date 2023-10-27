@@ -70,12 +70,19 @@ class backpack:
 pin0.set_analog_period(20)
 
 while True:
+    display.off()
+    
+    #set first clock hand
     pin0.write_analog(75)
     sleep(1000)
-    pin0.write_analog(50)
+
+    #set 2nd clock hand
+    pin3.write_analog(50)
     sleep(1000)
+    
     pin0.write_analog(100)
     sleep(1000)
+    
     f = backpack()
     f.set_decimal(2)
     f.update_display()
@@ -87,27 +94,27 @@ while True:
     i = 1234
 
     #3rd digit UP
-    if pin3.read_digital() == 1:
+    if pin5.read_digital() == 1:
         i += 10
         f.print(i)
         f.update_display()
         sleep(1000)
     
     #3rd digit DOWN
-    if pin4.read_digital() == 1:
+    if pin6.read_digital() == 1:
         i -= 10
         f.print(i)
         f.update_display()
         sleep(1000)
 
     #4th digit UP
-    if pin5.read_digital() == 1:
+    if pin7.read_digital() == 1:
         i += 1
         f.print(i)
         f.update_display()
         sleep(1000)
 
-    if pin6.read_digital() == 1:
+    if pin8.read_digital() == 1:
         i -= 1
         f.print(i)
         f.update_display()
