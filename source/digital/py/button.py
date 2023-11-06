@@ -51,36 +51,74 @@ class backpack:
             self.buffer[pos*2] |= 0x80
         else:
             self.buffer[pos*2] &= 0x7F
-            
+        
     def clear(self):
         self.buffer = bytearray([0]*16)
-        self.update_display()  
-        
+        self.update_display()
+    
     def set_colon(self, colon=True):
         if colon:
             self.buffer[4] |= 0x02
         else:
             self.buffer[4] &= 0xFD
-    
-    def addMin(self, value):
-        if value == 1:
-            self.clear()
-            self.print(1235)
-            self.update_display()
-
-
 
 # declare an instance
+# declare an instance
+
+i = 530
 while True:
     display.off()
-    i = 1234
     f = backpack()
     f.print(i)
     f.update_display()
     sleep(1000)
-    f.clear()
-    if button_a.is_pressed():
-        f.print(1233)
+    # set 1(-n):30
+    if pin7.read_digital():
+        f.clear()
+        i+=100
+        f.print(i)
         f.update_display()
-        sleep(1000)
-        
+        sleep(700) 
+    # set 1(+n):30
+    elif pin13.read_digital():
+        f.clear()
+        i -= 100
+        f.print(i)
+        f.update_display()
+        sleep(700)
+    elif pin6.read_digital():
+        f.clear()
+        i += 1000
+        f.print(i)
+        f.update_display()
+        sleep(700)
+    elif pin12.read_digital():
+        f.clear()
+        i -= 1000
+        f.print(i)
+        f.update_display()
+        sleep(700)
+    elif pin8.read_digital():
+        f.clear()
+        i += 10
+        f.print(i)
+        f.update_display()
+        sleep(700)
+    elif pin14.read_digital():
+        f.clear()
+        i -= 10
+        f.print(i)
+        f.update_display()
+        sleep(700)
+    elif pin9.read_digital():
+        f.clear()
+        i += 1
+        f.print(i)
+        f.update_display()
+        sleep(700)
+    elif pin16.read_digital():
+        f.clear()
+        i -= 1
+        f.print(i)
+        f.update_display()
+        sleep(700)
