@@ -18,7 +18,7 @@ class backpack:
         self.update_display()
     
     def set_brightness(self,b):
-        i2c.write(self.ADDRESS,bytes([self.CMD_BRIGHTNESS | b]))
+        i2c.write(self.ADDRESS,bytes([self.CMD_BRIGHTNESS | b]))       
     
     def blink_rate(self, b):
         i2c.write(self.ADDRESS,bytes([self.BLINK_CMD | 1 | (b << 1)]))
@@ -29,7 +29,7 @@ class backpack:
         pos = offset + position
         self.buffer[pos*2] = self.NUMS[digit] & 0xFF
         if dot:
-            self.buffer[pos*2] |= 0x80
+            self.buffer[pos*2] |= 0x80                    
     
     def update_display(self):
         data = bytearray([0]) + self.buffer
@@ -43,10 +43,10 @@ class backpack:
         for i,d in enumerate(dts):
             self.write_digit(i,d)
     
-    def set_decimal(self, position, dot=True):
+    def set_decimal(self, position, dot=True): 
         # skip the colon
         offset = 0 if position < 2 else 1
-        pos = offset + position
+        pos = offset + position        
         if dot:
             self.buffer[pos*2] |= 0x80
         else:
@@ -62,60 +62,249 @@ class backpack:
         else:
             self.buffer[4] &= 0xFD
 
+# declare an instance
+# declare an instance
+import music
 
-# Servo control:
-# 50 = ~1 millisecond pulse all right
-# 75 = ~1.5 millisecond pulse center
-# 100 = ~2.0 millisecond pulse all left
-pin0.set_analog_period(20)
+tune = ["C4:4", "D4:4", "E4:4", "C4:4", "C4:4", "D4:4", "E4:4", "C4:4",
+        "E4:4", "F4:4", "G4:8", "E4:4", "F4:4", "G4:8"]
 
+i = 1200
 while True:
-    display.off()
-    
-    #set first clock hand
-    pin0.write_analog(75)
-    sleep(1000)
-
-    #set 2nd clock hand
-    pin3.write_analog(50)
-    sleep(1000)
-    
-    pin0.write_analog(100)
-    sleep(1000)
-    
-    f = backpack()
-    f.set_decimal(2)
-    f.update_display()
-    sleep(1000)
-    f.print(1234)
-    f.update_display()
-    sleep(1000)
-
-    i = 1234
-
-    #3rd digit UP
-    if pin5.read_digital() == 1:
-        i += 10
+    set = 1
+    sound = 0
+    while sound == 0:
+        if microphone.current_event() == SoundEvent.LOUD:
+            for p in range(100):
+                pin0.write_analog(p)
+                sleep(3)
+                pin1.write_analog(p)
+                sleep(3)
+            pin0.write_analog(0)
+            sleep(10)
+            pin1.write_analog(0)
+            sleep(100)
+            sound = 1
+    while set==1:
+        music.play(tune)
+        set = 2
+    while set==2:
+        display.off()
+        f = backpack()
+        f.set_colon()
         f.print(i)
         f.update_display()
-        sleep(1000)
+        sleep(700)
+        
+        # set 1(-n):30
     
-    #3rd digit DOWN
-    if pin6.read_digital() == 1:
-        i -= 10
-        f.print(i)
-        f.update_display()
-        sleep(1000)
+        if pin7.read_digital()==0 and i<1200:
+            f.clear()
+            i+=100
+            if i > 1259 or i < 100 or (i%100)>59:
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
+            
+        # set 1(+n):30
+            
+        if pin13.read_digital()==0 and i>100:
+            f.clear()
+            i -= 100
+            if i > 1259 or i < 100 or (i%100)>59:
+                i+=100
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
+        
+        #set (+n)1:30
+        if pin6.read_digital()==0 and i<1000:
+            f.clear()
+            i += 1000
+            if i > 1259 or i < 100 or (i%100)>59:
+                i-=1000
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
 
-    #4th digit UP
-    if pin7.read_digital() == 1:
-        i += 1
-        f.print(i)
-        f.update_display()
-        sleep(1000)
+        #set (-n)1:30
+        if pin12.read_digital()==0 and i>1000:
+            f.clear()
+            i -= 1000
+            if i > 1259 or i < 100 or (i%100)>59:
+                i+=1000
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
 
-    if pin8.read_digital() == 1:
-        i -= 1
-        f.print(i)
-        f.update_display()
+        #set 11:(+n)0
+        if pin8.read_digital()==0 and (i%100)<50:
+            f.clear()
+            i += 10
+            if i > 1259 or i < 100 or (i%100)>59:
+                i-=10
+                continue 
+            f.print(i)
+            f.update_display()
+            sleep(700)
+
+        #set 11:(-n)0
+        if pin14.read_digital()==0 and (i%100)>0:
+            f.clear()
+            i -= 10
+            if i > 1259 or i < 100 or (i%100)>59:
+                i+=10
+                continue
+            f.print(i) 
+            f.update_display()
+            sleep(700)
+
+        #set 11:3(+n)
+        if pin9.read_digital()==0:
+            f.clear()
+            i += 1
+            if i > 1259 or i < 100 or (i%100)>59:
+                i-=1
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
+    
+        #set 11:3(-n)
+        if pin16.read_digital()==0:
+            f.clear()
+            i -= 1
+            if i > 1259 or i < 100 or (i%100)>59:
+                i+=1
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
+        if (i == 930):
+            f.set_colon()
+            music.play(tune)
+            set = 3
+
+    #2nd Grade Mode
+    while set == 3:
+        set = 1
+        for z in range(176):
+            pin0.write_analog(z)
+            sleep(3)
+        for u in range(185):
+            pin1.write_analog(u)
+            sleep(3)
+        pin0.write_analog(0)
+        sleep(10)
+        pin1.write_analog(0)
         sleep(1000)
+        while set==1:
+            music.play(tune)
+            set = 2
+        while set==2:
+            display.off()
+            f = backpack()
+            f.set_colon()
+            f.print(i)
+            f.update_display()
+            sleep(700)
+            
+            # set 1(-n):30
+        
+            if pin7.read_digital()==0 and i<1200:
+                f.clear()
+                i+=100
+                if i > 1259 or i < 100 or (i%100)>59:
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+                
+            # set 1(+n):30
+                
+            if pin13.read_digital()==0 and i>100:
+                f.clear()
+                i -= 100
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i+=100
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+            
+            #set (+n)1:30
+            if pin6.read_digital()==0 and i<1000:
+                f.clear()
+                i += 1000
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i-=1000
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+    
+            #set (-n)1:30
+            if pin12.read_digital()==0 and i>1000:
+                f.clear()
+                i -= 1000
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i+=1000
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+    
+            #set 11:(+n)0
+            if pin8.read_digital()==0 and (i%100)<50:
+                f.clear()
+                i += 10
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i-=10
+                    continue 
+                f.print(i)
+                f.update_display()
+                sleep(700)
+    
+            #set 11:(-n)0
+            if pin14.read_digital()==0 and (i%100)>0:
+                f.clear()
+                i -= 10
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i+=10
+                    continue
+                f.print(i) 
+                f.update_display()
+                sleep(700)
+    
+            #set 11:3(+n)
+            if pin9.read_digital()==0:
+                f.clear()
+                i += 1
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i-=1
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+        
+            #set 11:3(-n)
+            if pin16.read_digital()==0:
+                f.clear()
+                i -= 1
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i+=1
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+            if (i == 515):
+                f.set_colon()
+                music.play(tune)
+                set = 4
+        break
+    break
+    
