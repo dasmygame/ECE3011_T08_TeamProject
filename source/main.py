@@ -195,7 +195,7 @@ while True:
         for z in range(176):
             pin0.write_analog(z)
             sleep(3)
-        for u in range(185):
+        for u in range(183):
             pin1.write_analog(u)
             sleep(3)
         pin0.write_analog(0)
