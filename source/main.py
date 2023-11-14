@@ -98,73 +98,7 @@ while True:
         
         # set 1(-n):30
     
-        if pin7.read_digital()==0 and i<1200:
-            f.clear()
-            i+=100
-            if i > 1259 or i < 100 or (i%100)>59:
-                continue
-            f.print(i)
-            f.update_display()
-            sleep(700)
-            
-        # set 1(+n):30
-            
-        if pin13.read_digital()==0 and i>100:
-            f.clear()
-            i -= 100
-            if i > 1259 or i < 100 or (i%100)>59:
-                i+=100
-                continue
-            f.print(i)
-            f.update_display()
-            sleep(700)
-        
-        #set (+n)1:30
-        if pin6.read_digital()==0 and i<1000:
-            f.clear()
-            i += 1000
-            if i > 1259 or i < 100 or (i%100)>59:
-                i-=1000
-                continue
-            f.print(i)
-            f.update_display()
-            sleep(700)
-
-        #set (-n)1:30
-        if pin12.read_digital()==0 and i>1000:
-            f.clear()
-            i -= 1000
-            if i > 1259 or i < 100 or (i%100)>59:
-                i+=1000
-                continue
-            f.print(i)
-            f.update_display()
-            sleep(700)
-
-        #set 11:(+n)0
-        if pin8.read_digital()==0 and (i%100)<50:
-            f.clear()
-            i += 10
-            if i > 1259 or i < 100 or (i%100)>59:
-                i-=10
-                continue 
-            f.print(i)
-            f.update_display()
-            sleep(700)
-
-        #set 11:(-n)0
-        if pin14.read_digital()==0 and (i%100)>0:
-            f.clear()
-            i -= 10
-            if i > 1259 or i < 100 or (i%100)>59:
-                i+=10
-                continue
-            f.print(i) 
-            f.update_display()
-            sleep(700)
-
-        #set 11:3(+n)
-        if pin9.read_digital()==0:
+        if pin9.read_digital()==1:
             f.clear()
             i += 1
             if i > 1259 or i < 100 or (i%100)>59:
@@ -174,12 +108,83 @@ while True:
             f.update_display()
             sleep(700)
     
-        #set 11:3(-n)
-        if pin16.read_digital()==0:
+        if pin13.read_digital()==1:
+            f.clear()
+            i -= 100
+            if i > 1259 or i < 100 or (i%100)>59:
+                i+=100
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
+        if pin14.read_digital()==1:
+            f.clear()
+            i -= 10
+            if i > 1259 or i < 100 or (i%100)>59:
+                i+=10
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
+        if pin16.read_digital()==1:
             f.clear()
             i -= 1
             if i > 1259 or i < 100 or (i%100)>59:
                 i+=1
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
+        if pin16.read_digital()==1:
+            f.clear()
+            i -= 1
+            if i > 1259 or i < 100 or (i%100)>59:
+                i+=1
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
+        if pin6.read_digital()==1:
+            f.clear()
+            i += 1000
+            if i > 1259 or i < 100 or (i%100)>59:
+                i-=1000
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
+        if pin7.read_digital()==1:
+            f.clear()
+            i += 100
+            if i > 1259 or i < 100 or (i%100)>59:
+                i-=100
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
+        if pin8.read_digital()==1:
+            f.clear()
+            i += 10
+            if i > 1259 or i < 100 or (i%100)>59:
+                i-=10
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
+        if pin9.read_digital()==1:
+            f.clear()
+            i += 1
+            if i > 1259 or i < 100 or (i%100)>59:
+                i-=1
+                continue
+            f.print(i)
+            f.update_display()
+            sleep(700)
+        if pin12.read_digital()==1:
+            f.clear()
+            i -= 1000
+            if i > 1259 or i < 100 or (i%100)>59:
+                i+=1000
                 continue
             f.print(i)
             f.update_display()
@@ -215,73 +220,7 @@ while True:
             
             # set 1(-n):30
         
-            if pin7.read_digital()==0 and i<1200:
-                f.clear()
-                i+=100
-                if i > 1259 or i < 100 or (i%100)>59:
-                    continue
-                f.print(i)
-                f.update_display()
-                sleep(700)
-                
-            # set 1(+n):30
-                
-            if pin13.read_digital()==0 and i>100:
-                f.clear()
-                i -= 100
-                if i > 1259 or i < 100 or (i%100)>59:
-                    i+=100
-                    continue
-                f.print(i)
-                f.update_display()
-                sleep(700)
-            
-            #set (+n)1:30
-            if pin6.read_digital()==0 and i<1000:
-                f.clear()
-                i += 1000
-                if i > 1259 or i < 100 or (i%100)>59:
-                    i-=1000
-                    continue
-                f.print(i)
-                f.update_display()
-                sleep(700)
-    
-            #set (-n)1:30
-            if pin12.read_digital()==0 and i>1000:
-                f.clear()
-                i -= 1000
-                if i > 1259 or i < 100 or (i%100)>59:
-                    i+=1000
-                    continue
-                f.print(i)
-                f.update_display()
-                sleep(700)
-    
-            #set 11:(+n)0
-            if pin8.read_digital()==0 and (i%100)<50:
-                f.clear()
-                i += 10
-                if i > 1259 or i < 100 or (i%100)>59:
-                    i-=10
-                    continue 
-                f.print(i)
-                f.update_display()
-                sleep(700)
-    
-            #set 11:(-n)0
-            if pin14.read_digital()==0 and (i%100)>0:
-                f.clear()
-                i -= 10
-                if i > 1259 or i < 100 or (i%100)>59:
-                    i+=10
-                    continue
-                f.print(i) 
-                f.update_display()
-                sleep(700)
-    
-            #set 11:3(+n)
-            if pin9.read_digital()==0:
+            if pin9.read_digital()==1:
                 f.clear()
                 i += 1
                 if i > 1259 or i < 100 or (i%100)>59:
@@ -290,13 +229,84 @@ while True:
                 f.print(i)
                 f.update_display()
                 sleep(700)
-        
-            #set 11:3(-n)
-            if pin16.read_digital()==0:
+            
+            if pin13.read_digital()==1:
+                f.clear()
+                i -= 100
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i+=100
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+            if pin14.read_digital()==1:
+                f.clear()
+                i -= 10
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i+=10
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+            if pin16.read_digital()==1:
                 f.clear()
                 i -= 1
                 if i > 1259 or i < 100 or (i%100)>59:
                     i+=1
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+            if pin16.read_digital()==1:
+                f.clear()
+                i -= 1
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i+=1
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+            if pin6.read_digital()==1:
+                f.clear()
+                i += 1000
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i-=1000
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+            if pin7.read_digital()==1:
+                f.clear()
+                i += 100
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i-=100
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+            if pin8.read_digital()==1:
+                f.clear()
+                i += 10
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i-=10
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+            if pin9.read_digital()==1:
+                f.clear()
+                i += 1
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i-=1
+                    continue
+                f.print(i)
+                f.update_display()
+                sleep(700)
+            if pin12.read_digital()==1:
+                f.clear()
+                i -= 1000
+                if i > 1259 or i < 100 or (i%100)>59:
+                    i+=1000
                     continue
                 f.print(i)
                 f.update_display()
@@ -307,4 +317,3 @@ while True:
                 set = 4
         break
     break
-    
